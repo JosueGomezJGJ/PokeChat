@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Image, Table, TableRow, TableCell } from "semantic-ui-react";
+import { Card, Image, List, ListItem } from "semantic-ui-react";
 import axios from "axios";
 
 const PokemonCard = ({ pokemonID }) => {
@@ -35,8 +35,29 @@ const PokemonCard = ({ pokemonID }) => {
     return loading ? <div>Loading...</div> : <div>No data available</div>;
   }
 
+  const typeColors = {
+    normal: "grey",
+    fire: "red",
+    water: "blue",
+    electric: "yellow",
+    grass: "green",
+    ice: "teal",
+    fighting: "orange",
+    poison: "purple",
+    ground: "brown",
+    flying: "violet",
+    psychic: "pink",
+    bug: "olive",
+    rock: "brown",
+    ghost: "violet",
+    dragon: "blue",
+    dark: "black",
+    steel: "grey",
+    fairy: "pink",
+  };
+
   return (
-    <Card raised>
+    <Card>
       <Image
         src={pokemonData.sprites.front_default}
         alt={pokemonData.name}
@@ -46,20 +67,21 @@ const PokemonCard = ({ pokemonID }) => {
         <Card.Header>
           {pokemonData.name.charAt(0).toUpperCase() + pokemonData.name.slice(1)}
         </Card.Header>
-        <Table basic="very" unstackable>
-          <Table.Body>
-            {pokemonData.stats.map((stat, index) => (
-              <TableRow key={index}>
-                <TableCell verticalAlign="middle">
-                  {stat.stat.name.toUpperCase()}
-                </TableCell>
-                <TableCell verticalAlign="middle" textAlign="right">
-                  {stat.base_stat}
-                </TableCell>
-              </TableRow>
-            ))}
-          </Table.Body>
-        </Table>
+        {pokemonData.types.map((type, index) => (
+          <div key={index} className={`ui ${typeColors[type.type.name]} label`}>
+            {type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1)}
+          </div>
+        ))}
+        <List divided relaxed className="large">
+          {pokemonData.stats.map((stat, index) => (
+            <ListItem key={index}>
+              <List.Content floated="left">
+                {stat.stat.name.toUpperCase()}
+              </List.Content>
+              <List.Content floated="right">{stat.base_stat}</List.Content>
+            </ListItem>
+          ))}
+        </List>
       </Card.Content>
     </Card>
   );
