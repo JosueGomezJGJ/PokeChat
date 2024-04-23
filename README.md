@@ -2,9 +2,9 @@
 
 ## Author
 
-* [Your Name Here]
-* [Your UTA ID Number]
-* [Your UTA Email]
-* [Cats or Dogs?]
+* Josue Gomez
+* 1001852411
+* Josue.Gomez@mavs.uta.edu
+* Dogs
 
 * [Video Submission URL -- make sure permissions are open]
