@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Card, Image, List, ListItem } from "semantic-ui-react";
+import { Card, Image, List, ListItem, Button } from "semantic-ui-react";
 import axios from "axios";
 
 const PokemonCard = ({ pokemonID }) => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [currentImage, setCurrentImage] = useState(0);
 
   useEffect(() => {
     if (data[pokemonID]) {
@@ -56,13 +57,28 @@ const PokemonCard = ({ pokemonID }) => {
     fairy: "pink",
   };
 
+  const images = [
+    pokemonData.sprites.front_default,
+    pokemonData.sprites.back_default,
+    pokemonData.sprites.front_shiny,
+    pokemonData.sprites.back_shiny,
+  ].filter(Boolean);
+
+  const handleNext = () => {
+    setCurrentImage((currentImage + 1) % images.length);
+  };
+
+  const handlePrevious = () => {
+    setCurrentImage((currentImage - 1 + images.length) % images.length);
+  };
+
   return (
     <Card>
-      <Image
-        src={pokemonData.sprites.front_default}
-        alt={pokemonData.name}
-        size="medium"
-      />
+      <Image src={images[currentImage]} alt="Pokemon Sprite" size="large" />
+      <Button.Group>
+        <Button onClick={handlePrevious} icon="left chevron" />
+        <Button onClick={handleNext} icon="right chevron" />
+      </Button.Group>
       <Card.Content>
         <Card.Header>
           {pokemonData.name.charAt(0).toUpperCase() + pokemonData.name.slice(1)}
