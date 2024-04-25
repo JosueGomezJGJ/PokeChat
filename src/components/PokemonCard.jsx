@@ -38,6 +38,11 @@ const PokemonCard = ({ pokemonID }) => {
   const [playing, setPlaying] = useState(false);
   const audioRef = useRef(new Audio());
 
+  console.log("Here is the pokemonID", pokemonID, typeof pokemonID);
+
+  if (typeof pokemonID === "object") {
+    pokemonID = pokemonID.id;
+  }
   useEffect(() => {
     setLoading(true);
     axios
@@ -58,7 +63,7 @@ const PokemonCard = ({ pokemonID }) => {
   useEffect(() => {
     if (data[pokemonID]) {
       audioRef.current.src = data[pokemonID].cries.latest;
-      audioRef.current.volume = 0.5;
+      audioRef.current.volume = 0.2;
       audioRef.current.addEventListener("ended", handleAudioEnded);
     }
 
